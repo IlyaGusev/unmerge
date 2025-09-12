@@ -19,7 +19,7 @@ def train_production_adapter(
 ):
     print(f"Training {task_name} with {examples_limit} examples")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="left")
     tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
@@ -27,6 +27,7 @@ def train_production_adapter(
         torch_dtype=torch.bfloat16,
         device_map="auto",
         trust_remote_code=True,
+        attn_implementation="flash_attention_2",
     )
 
     lora_config = LoraConfig(
@@ -50,7 +51,7 @@ def train_production_adapter(
         texts = []
         for messages in examples["messages"]:
             text = tokenizer.apply_chat_template(
-                messages, tokenize=True, add_generation_prompt=False
+                messages, tokenize=False, add_generation_prompt=False
             )
             texts.append(text)
 
@@ -131,6 +132,7 @@ def train_production_adapter(
 def train_adapters(
     data_summary_path: str = "results/processing_summary.json",
     model_name: str = "Qwen/Qwen2.5-7B-Instruct",
+    examples_limit: int = 1500,
 ):
     with open(data_summary_path) as r:
         data_config = json.load(r)
@@ -144,7 +146,10 @@ def train_adapters(
 
         try:
             result = train_production_adapter(
-                task_name=task_name, dataset_path=dataset_path, model_name=model_name
+                task_name=task_name,
+                dataset_path=dataset_path,
+                model_name=model_name,
+                examples_limit=examples_limit,
             )
             results.append(result)
         except Exception as e:
