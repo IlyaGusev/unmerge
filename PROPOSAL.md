@@ -47,9 +47,9 @@ Result: This process yields test models whose "ground truth" composition is know
 
 Objective: Make task vectors tractable for decomposition.
 Algorithm:
-1. Compose a big diverse dataset with 5000 examples from existing training datasets (use only datasets from the "known tasks" group of adapters).
-2. Apply Fisher information matrix method to determine the most important groups of parameters. Accumulate squared grads over mini-batches; clip extremes. Determine details yourself. Remember selected layers/indices.
-3. Apply the same procedure for all task vectors and target vectors of all merged models.
+1. Compose a diverse dataset with 1000 examples from existing training datasets (use only datasets from the "known tasks" group of adapters).
+2. Apply Fisher information matrix method to determine the most important groups of parameters. Accumulate squared grads over mini-batches; clip extremes. Determine details yourself. Remember selected layers/indices. Do ti for each adapter, aggregate results.
+3. Apply the same procedure with the same indices for all task vectors and target vectors of all merged models.
 
 Result: Compressed task and target vectors. The desired size is around 100k parameters.
 
