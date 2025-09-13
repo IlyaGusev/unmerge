@@ -12,11 +12,11 @@ This plan is designed to be executable on a **single consumer-grade GPU (e.g., N
 
 ### Phase 1: Micro-Task Dictionary Construction
 
-Objective: Create a dictionary of ~20-30 distinct "micro-task" vectors.
+Objective: Create a dictionary of ~15 distinct "micro-task" vectors.
 
 Base Model: Qwen/Qwen2.5-7B-Instruct. Its size is manageable for an RTX 3090.
 
-Micro-Tasks: We will fine-tune the base model on approximately 20-30 distinct, narrow tasks. These will be sourced from public datasets and categorized as follows:
+Micro-Tasks: We will fine-tune the base model on approximately 15 distinct, narrow tasks. These will be sourced from public datasets and categorized as follows:
 - Python Coding (~5 tasks): Subsets of datasets like CodeAlpaca, focusing on specific libraries (e.g., `numpy` array manipulation, `pandas` DataFrame operations, `matplotlib` plotting basics).
 - Structured Text Generation (~5 tasks): Tasks requiring generation of specific formats (e.g., generating valid JSON from natural language, creating XML snippets, formatting text as Markdown tables).
 - Logic & Reasoning (~5 tasks): Subsets of reasoning datasets (e.g., GSM8K, Aqua-RAT) filtered for specific reasoning patterns (e.g., single-step arithmetic, multi-hop reasoning).
@@ -33,7 +33,7 @@ Fine-tuning Method:
 
 ### Phase 2: Target Model Creation
 
-Objective: Create a set of 30-40 multi-skill models for decomposition.
+Objective: Create a set of multi-skill models for decomposition.
 Method: We will use different merging methods: TIES-merging/DARE/Task arithmetic (from `mergekit`) to combine from 2 to 5 randomly selected micro-task LoRAs from the dictionary created in Phase 1.
 Groups:
 - First group: models composed only from known vectors from the dictionary.
@@ -42,7 +42,19 @@ Groups:
 
 Result: This process yields test models whose "ground truth" composition is known, providing a perfect testbed to validate our decomposition algorithm. The merged LoRA adapter represents the "target task vector" for analysis. With the second and the third group we can simulate close to real-world scenarios.
 
-### Phase 3: Decomposition
+
+### Parse 3: Reducing Task Vectors Dimensionality
+
+Objective: Make task vectors tractable for decomposition.
+Algorithm:
+1. Compose a big diverse dataset with 5000 examples from existing training datasets (use only datasets from the "known tasks" group of adapters).
+2. Apply Fisher information matrix method to determine the most important groups of parameters. Accumulate squared grads over mini-batches; clip extremes. Determine details yourself. Remember selected layers/indices.
+3. Apply the same procedure for all task vectors and target vectors of all merged models.
+
+Result: Compressed task and target vectors. The desired size is around 100k parameters.
+
+
+### Phase 4: Decomposition
 
 Objective: Decompose the target task vectors using our proposed algorithm.
 Algorithm: For each of the 30-40 target models:
@@ -69,8 +81,9 @@ Algorithm: For each of the 30-40 target models:
 
 Use the same fixed task vector dictionary and three groups of target models.
 
+Result: This process yields comprehensive comparsions between different decompsotion methods in different conditions.
 
-### Phase 4: Causal Verification
+### Phase 5: Causal Verification
 
 Objective: Surgically remove a decomposed capability and measure the impact, validating the causal link.
 Protocol:
