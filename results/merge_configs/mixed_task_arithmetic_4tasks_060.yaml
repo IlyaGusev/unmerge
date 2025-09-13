@@ -1,0 +1,25 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+dtype: bfloat16
+merge_method: task_arithmetic
+models:
+- model:
+    adapter: models/xsum/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+- model:
+    adapter: models/imdb_sentiment/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+- model:
+    adapter: models/style_transfer/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+- model:
+    adapter: models/arxiv_summarization/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+parameters: {}

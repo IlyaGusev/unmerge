@@ -1,0 +1,26 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+dtype: bfloat16
+merge_method: dare_linear
+models:
+- model:
+    adapter: models/arjun_python_qa/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+- model:
+    adapter: models/squad_qa/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+- model:
+    adapter: models/orca_math/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+- model:
+    adapter: models/stablecode_python/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.25
+parameters:
+  density: 0.5

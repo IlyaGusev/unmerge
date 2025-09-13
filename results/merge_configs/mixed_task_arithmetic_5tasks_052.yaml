@@ -1,0 +1,30 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+dtype: bfloat16
+merge_method: task_arithmetic
+models:
+- model:
+    adapter: models/codesearchnet_python/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.2
+- model:
+    adapter: models/alpaca_instructions/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.2
+- model:
+    adapter: models/imdb_sentiment/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.2
+- model:
+    adapter: models/orca_math/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.2
+- model:
+    adapter: models/arxiv_summarization/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.2
+parameters: {}
