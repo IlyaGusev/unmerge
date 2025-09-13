@@ -47,8 +47,14 @@ Result: This process yields test models whose "ground truth" composition is know
 
 Objective: Make task vectors tractable for decomposition.
 Algorithm:
-1. Expand LoRA adapters to the weights space (ΔW)
-2. Get top-k weights per module judging by |ΔW|.
+1. Expand LoRA adapters to the base model weights space (ΔW).
+2. Aggregate weight magnitutes |ΔW| across all adapters, for instance with `max`.
+3. Get top-k weights per module (q, k, v, o and different layers) judging by aggregated |ΔW|.
+4. Convert it to a binary mask.
+5. Apply this mask for all task vectors and target vectors.
+
+The whole process should be easily vectorized.
+
 Result: Compressed task and target vectors. The desired size is around 100k parameters.
 
 
