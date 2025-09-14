@@ -71,15 +71,16 @@ Algorithm: For each of the 30-40 target models:
 - Orthogonal Matching Pursuit
 - NNLS
 - Anything you can think of and anything extracted from the literature
+Scale coefficients in a way where their sum is 1.
 4. Calculate the following metrics for the first and the second model groups (known and mixed vectors):
 - Component precision
 - Component recall
 - Sparsity
-- Number of perfect matches (when all extracted components are correct)
-- Reconstruction error: MSE(target, reconstruction)
+- Number of perfect matches (when all extracted components are correct, calculate only for known vectors)
+- Reconstruction error: 1 - max(0, cos(target, reconstruction))^2
 5. For the third group (models composed only from unknown task vectors not from the dictionary) calculate:
 - Sparsity
-- Reconstruction error: MSE(target, reconstruction)
+- Reconstruction error: 1 - max(0, cos(target, reconstruction))^2
 - Semantic alignment between extracted and real task vectors.
 
 Use the same fixed task vector dictionary and three groups of target models.
