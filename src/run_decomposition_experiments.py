@@ -321,7 +321,6 @@ class DecompositionExperiments:
         for result in results:
             key = (result["model_name"], result["algorithm"])
             reconstruction_error = result["metrics"]["reconstruction_error"]
-            hyperparams_key = tuple(sorted(result["hyperparams"].items()))
             if key not in best_hyperparams or reconstruction_error < best_hyperparams[key]["error"]:
                 best_hyperparams[key] = {
                     "hyperparams": result["hyperparams"],
