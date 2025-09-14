@@ -1,10 +1,10 @@
-Research Proposal: Unmerging via Sparse Coding (UNMERGE)
+Research Proposal: Unmerging via Sparse Coding
 
 ## 1. Novelty Statement
 
 The core novelty of this work lies in establishing a **verifiable framework for model capability attribution** that allows backtracking of merged models. 
 
-Our proposed method, UNMERGE, reframes the problem. We treat a model's fine-tuned capabilities, encapsulated in a task vector, as a "bill of materials" that can be decomposed into a sparse, non-negative combination of known "micro-task" vectors from a pre-built dictionary.
+Our proposed framework, UNMERGE, reframes the problem. We treat a model's fine-tuned capabilities, encapsulated in a task vector, as a "bill of materials" that can be decomposed into a sparse, non-negative combination of known "micro-task" vectors from a pre-built dictionary.
 
 It enables a controlled setting that can be a base for furure experiments. For instance, with causal verification.
 

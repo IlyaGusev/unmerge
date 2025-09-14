@@ -1,4 +1,4 @@
-# COMPREHENSIVE RELATED WORK FOR "UNMERGE: CAUSAL UNMERGING VIA SPARSE CODING"
+# COMPREHENSIVE RELATED WORK FOR "UNMERGING VIA SPARSE CODING"
 
 ## Abstract
 This comprehensive survey covers six key research areas relevant to UNMERGE: neural network decomposition and parameter attribution, sparse coding and dictionary learning for neural networks, LoRA and adapter analysis, model merging techniques, causal intervention and model editing, and mechanistic interpretability. We focus on high-quality papers from 2022-2025 alongside foundational works, organizing them by methodology and contribution to establish the theoretical and empirical foundations for causal unmerging via sparse coding.

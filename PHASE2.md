@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Phase 2 of the UNMERGE project achieved exceptional success in creating diverse multi-skill target models for decomposition analysis. All 72 planned model configurations were successfully merged with a **100% success rate**, establishing a comprehensive testbed for the causal unmerging framework. The phase systematically generated target models across three strategic groups (known, unknown, and mixed task compositions) using four different merging methodologies, creating the foundation for subsequent decomposition and verification phases.
+Phase 2 of the UNMERGE project achieved exceptional success in creating diverse multi-skill target models for decomposition analysis. All 72 planned model configurations were successfully merged with a **100% success rate**, establishing a comprehensive testbed for the unmerging framework. The phase systematically generated target models across three strategic groups (known, unknown, and mixed task compositions) using four different merging methodologies, creating the foundation for subsequent decomposition and verification phases.
 
 ### Key Achievements:
 - **Complete Success**: 72/72 model configurations successfully merged (0 failures)
@@ -253,13 +253,6 @@ The target models establish perfect conditions for Phase 4 (decomposition):
 **3. Partial Decomposition**: Mixed group models test realistic scenarios
 **4. Method Robustness**: Multiple merging methods test decomposition generalization
 
-### Phase 5 Enablement
-Phase 2 outputs directly enable Phase 5 (causal verification):
-
-**1. Baseline Models**: Original merged models serve as performance baselines
-**2. Ablation Targets**: Decomposed components can be surgically removed
-**3. Comparison Framework**: Multiple models enable statistical significance testing
-
 ## Challenges and Solutions
 
 ### Challenge 1: Computational Resource Management
@@ -340,18 +333,6 @@ Using four different merging methods provides robustness testing for decompositi
 - Implement sparsity measurement tools
 - Create statistical significance testing
 
-### Phase 5 Planning
-
-**1. Causal Verification Design**
-- Plan surgical removal experiments
-- Design capability measurement protocols
-- Establish statistical testing frameworks
-
-**2. Results Validation**
-- Create comprehensive evaluation suites
-- Plan multiple verification approaches
-- Design replication procedures
-
 ## Technical Specifications Summary
 
 ### Model Architecture
@@ -380,11 +361,11 @@ Using four different merging methods provides robustness testing for decompositi
 
 ## Conclusion
 
-Phase 2 represents a landmark achievement in the UNMERGE project, delivering 100% success across all planned objectives while establishing a robust foundation for subsequent phases. The systematic creation of 72 diverse target models using four different merging methodologies provides an unprecedented testbed for causal unmerging research.
+Phase 2 represents a landmark achievement in the UNMERGE project, delivering 100% success across all planned objectives while establishing a robust foundation for subsequent phases. The systematic creation of 72 diverse target models using four different merging methodologies provides an unprecedented testbed for unmerging research.
 
 The phase's success demonstrates the viability of large-scale model merging for research purposes and validates the experimental design choices made in the original proposal. The clear separation between known, unknown, and mixed model groups creates optimal conditions for rigorous decomposition algorithm testing and validation.
 
-Most significantly, Phase 2's outputs directly enable the core innovation of the UNMERGE project: establishing causally verifiable frameworks for model capability attribution. With ground truth available (known group), negative controls established (unknown group), and realistic test cases prepared (mixed group), the project is optimally positioned to demonstrate the practical viability of sparse coding approaches to neural network interpretability.
+Most significantly, Phase 2's outputs directly enable the core innovation of the UNMERGE project: establishing verifiable frameworks for model capability attribution. With ground truth available (known group), negative controls established (unknown group), and realistic test cases prepared (mixed group), the project is optimally positioned to demonstrate the practical viability of sparse coding approaches to neural network interpretability.
 
 The technical infrastructure developed in Phase 2, including automated configuration generation, systematic metadata tracking, and robust error handling, provides a scalable foundation for extending the research to larger model families and more complex task combinations in future work.
 
