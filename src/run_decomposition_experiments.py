@@ -3,7 +3,8 @@ import json
 import time
 import random
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
+from collections import defaultdict
 
 import torch
 import numpy as np
@@ -83,12 +84,6 @@ class DecompositionExperiments:
                 "n_nonzero_coefs": [1, 2, 3, 4, 5, 6, 7, 8],
                 "tol": [1e-8, 1e-6, 1e-4],
             },
-            "iht": {
-                "sparsity_level": [1, 2, 3, 4, 5, 6, 7, 8],
-                "step_size": [0.001, 0.01, 0.1],
-            },
-            "cosamp": {"sparsity_level": [1, 2, 3, 4, 5, 6, 7, 8]},
-            "admm_lasso": {"alpha": [1e-6, 1e-4, 1e-2], "rho": [0.1, 1.0, 10.0]},
         }
 
     def compute_metrics(
@@ -173,20 +168,6 @@ class DecompositionExperiments:
                 coefficients, reconstruction = decomposer.non_negative_least_squares(
                     target_vector
                 )
-            elif algorithm == "iht":
-                coefficients, reconstruction = decomposer.iterative_hard_thresholding(
-                    target_vector, **hyperparams
-                )
-            elif algorithm == "cosamp":
-                coefficients, reconstruction = (
-                    decomposer.compressive_sampling_matching_pursuit(
-                        target_vector, **hyperparams
-                    )
-                )
-            elif algorithm == "admm_lasso":
-                coefficients, reconstruction = decomposer.admm_lasso(
-                    target_vector, **hyperparams
-                )
             else:
                 raise ValueError(f"Unknown algorithm: {algorithm}")
 
@@ -219,23 +200,20 @@ class DecompositionExperiments:
         self,
         algorithms: List[str] = None,
         seeds: List[int] = None,
-        max_models_per_category: int = None,
+        max_models_per_category: Optional[int] = None,
     ):
         if algorithms is None:
             algorithms = [
+                "omp",
+                "nnls",
                 "dot_product",
                 "lasso",
                 "ridge",
                 "elastic_net",
-                "omp",
-                "nnls",
-                "iht",
-                "cosamp",
-                "admm_lasso",
             ]
 
         if seeds is None:
-            seeds = [42, 123, 456, 789, 999]
+            seeds = [42, 123, 456]
 
         self.load_dictionary()
         self.load_ground_truth_compositions()
@@ -291,6 +269,7 @@ class DecompositionExperiments:
                 print(f"  Category: {category} ({len(models)} models)")
 
                 for model in models:
+                    merging_method = model["name"].split("_")[1]
                     for params in param_combinations:
                         for seed in seeds:
                             experiment_count += 1
@@ -303,6 +282,7 @@ class DecompositionExperiments:
                                 algorithm, model, params, decomposer, seed
                             )
                             result["category"] = category
+                            result["merging_method"] = merging_method
                             all_results.append(result)
 
         return all_results
@@ -329,29 +309,66 @@ class DecompositionExperiments:
         print(f"Saved {len(results)} results to {output_path}")
 
     def analyze_results(self, results: List[Dict]):
-        analysis = {"by_algorithm": {}, "by_category": {}, "summary_statistics": {}}
+        analysis = {
+            "by_algorithm": defaultdict(list),
+            "by_category": defaultdict(list),
+            "by_merging_method": defaultdict(list),
+            "by_algorithm_by_category": defaultdict(list),
+            "by_algorithm_by_category_by_merging_method": defaultdict(list),
+        }
 
+        best_hyperparams = {}
         for result in results:
+            key = (result["model_name"], result["algorithm"])
+            reconstruction_error = result["metrics"]["reconstruction_error"]
+            hyperparams_key = tuple(sorted(result["hyperparams"].items()))
+            if key not in best_hyperparams or reconstruction_error < best_hyperparams[key]["error"]:
+                best_hyperparams[key] = {
+                    "hyperparams": result["hyperparams"],
+                    "error": reconstruction_error
+                }
+        filtered_results = []
+        for result in results:
+            key = (result["model_name"], result["algorithm"])
+            if key in best_hyperparams and result["hyperparams"] == best_hyperparams[key]["hyperparams"]:
+                filtered_results.append(result)
+
+        for result in filtered_results:
             algorithm = result["algorithm"]
             category = result["category"]
             metrics = result["metrics"]
+            merging_method = result["merging_method"]
 
-            if algorithm not in analysis["by_algorithm"]:
-                analysis["by_algorithm"][algorithm] = []
             analysis["by_algorithm"][algorithm].append(metrics)
-
-            if category not in analysis["by_category"]:
-                analysis["by_category"][category] = []
             analysis["by_category"][category].append(metrics)
+            analysis["by_merging_method"][merging_method].append(metrics)
+            analysis["by_algorithm_by_category"][f"{algorithm}_{category}"].append(
+                metrics
+            )
+            analysis["by_algorithm_by_category_by_merging_method"][
+                f"{algorithm}_{category}_{merging_method}"
+            ].append(metrics)
 
         for algorithm, metric_list in analysis["by_algorithm"].items():
             analysis["by_algorithm"][algorithm] = self._compute_summary_stats(
                 metric_list
             )
-
         for category, metric_list in analysis["by_category"].items():
             analysis["by_category"][category] = self._compute_summary_stats(metric_list)
-
+        for category, metric_list in analysis["by_merging_method"].items():
+            analysis["by_merging_method"][category] = self._compute_summary_stats(
+                metric_list
+            )
+        for item, metric_list in analysis["by_algorithm_by_category"].items():
+            analysis["by_algorithm_by_category"][item] = self._compute_summary_stats(
+                metric_list
+            )
+        for item, metric_list in analysis[
+            "by_algorithm_by_category_by_merging_method"
+        ].items():
+            analysis["by_algorithm_by_category_by_merging_method"][item] = (
+                self._compute_summary_stats(metric_list)
+            )
         return analysis
 
     def _compute_summary_stats(self, metric_list: List[Dict]):
@@ -364,11 +381,11 @@ class DecompositionExperiments:
             values = [m[key] for m in metric_list if key in m]
             if values:
                 summary[key] = {
-                    "mean": np.mean(values),
-                    "std": np.std(values),
-                    "min": np.min(values),
-                    "max": np.max(values),
-                    "median": np.median(values),
+                    "mean": float(np.mean(values)),
+                    "std": float(np.std(values)),
+                    "min": float(np.min(values)),
+                    "max": float(np.max(values)),
+                    "median": float(np.median(values)),
                 }
 
         return summary
@@ -391,7 +408,7 @@ def main():
 
     print(f"\nCompleted {len(results)} experiments")
 
-    experiment_runner.save_results(results, "results/decomposition_results.json")
+    experiment_runner.save_results(results, "decomposition_results.json")
 
     print("\nAnalyzing results...")
     analysis = experiment_runner.analyze_results(results)
