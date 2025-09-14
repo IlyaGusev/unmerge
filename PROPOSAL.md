@@ -66,21 +66,20 @@ Algorithm: For each of the 30-40 target models:
 2. As applying decomposition to all 4B parameters is infeasible, we will operate on a **per-layer basis** and only on the **non-zero parameters of the task vector**. Since LoRA vectors are inherently sparse, this is computationally tractable.
 3. Apply different decomposition methods:
 - LASSO
-- Group LASSO
 - Dot product
 - Ridge regression
 - Orthogonal Matching Pursuit
-- Sparse auto-encoders
+- NNLS
 - Anything you can think of and anything extracted from the literature
 4. Calculate the following metrics for the first and the second model groups (known and mixed vectors):
 - Component precision
 - Component recall
 - Sparsity
 - Number of perfect matches (when all extracted components are correct)
-- Normalized reconstruction error: norm(w_target - w_reconstruction) / norm(w_target)
+- Reconstruction error: MSE(target, reconstruction)
 5. For the third group (models composed only from unknown task vectors not from the dictionary) calculate:
 - Sparsity
-- Normalized reconstruction error: norm(w_target - w_reconstruction) / norm(w_target)
+- Reconstruction error: MSE(target, reconstruction)
 - Semantic alignment between extracted and real task vectors.
 
 Use the same fixed task vector dictionary and three groups of target models.
