@@ -90,6 +90,7 @@ Result: This process yields comprehensive comparsions between different decompso
 
 Objective: Surgically remove a decomposed capability and measure the impact, validating the causal link.
 Protocol:
+0. This part should be done for models composed only from the tasks not from the dictionary ("unknown tasks").
 1. For a target model and a decomposed skill with a high coefficient (e.g., 'pandas programming'), retrieve the corresponding micro-task vector from the dictionary.
 2. Surgical Subtraction: Subtract the weighted micro-task vector (`c_i * ΔW_dict_i`) from the target model's weights.
 3. This creates a new, "ablated" model.
