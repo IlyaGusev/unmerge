@@ -90,12 +90,10 @@ Result: This process yields comprehensive comparsions between different decompso
 
 Objective: Surgically remove a decomposed capability and measure the impact, validating the causal link.
 Protocol:
-0. This part should be done for models composed only from the tasks not from the dictionary ("unknown tasks").
-1. For a target model and a decomposed skill with a high coefficient (e.g., 'pandas programming'), retrieve the corresponding micro-task vector from the dictionary.
-2. Surgical Subtraction: Subtract the weighted micro-task vector (`c_i * ΔW_dict_i`) from the target model's weights.
-3. This creates a new, "ablated" model.
-
-Evaluation Metrics:
-- Primary Metric (Capability Drop): We will evaluate the ablated model on a held-out test set specific to the removed skill (e.g., a set of 50 pandas programming problems not seen during training). We expect to see a significant, measurable drop in performance.
-- Secondary Metric (Stability): We will evaluate the ablated model on a broad suite of unrelated benchmarks (e.g., MMLU, standard GSM8K). We expect to see minimal to no performance degradation, demonstrating the "surgical" nature of the intervention and the absence of catastrophic forgetting.
+1. This part should be done for models composed only from the tasks not from the dictionary ("unknown tasks").
+2. For a target model and a decomposed skill with a high coefficient (e.g., 'pandas programming'), retrieve the corresponding micro-task vector from the dictionary.
+3. Surgical Subtraction: Subtract the weighted micro-task vector (`c_i * ΔW_dict_i`) from the target model's weights.
+4. This creates a new, "ablated" model.
+5. Evaluate capability drop for the ablated model on a held-out test set specific to the removed skill. Use tests sets of the datasets from Phase 1. Use chat template (the same way it was used in training).
+5. Evaluate the ablated model on unrelated benchmarks (also test sets from Phase 1, but not related to the removed skill). We expect to see minimal to no performance degradation, demonstrating the "surgical" nature of the intervention and the absence of catastrophic forgetting.
 
