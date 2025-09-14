@@ -1,30 +1,23 @@
-base_model: Qwen/Qwen2.5-7B-Instruct
 dtype: bfloat16
 merge_method: linear
 models:
 - model:
-    adapter: models/codesearchnet_python/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/codesearchnet_python/full
   parameters:
     weight: 0.2
 - model:
-    adapter: models/python_instructions_alpaca/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/python_instructions_alpaca/full
   parameters:
     weight: 0.2
 - model:
-    adapter: models/ms_marco_qa/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/ms_marco_qa/full
   parameters:
     weight: 0.2
 - model:
-    adapter: models/xsum/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/xsum/full
   parameters:
     weight: 0.2
 - model:
-    adapter: models/gsm8k_math/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/gsm8k_math/full
   parameters:
     weight: 0.2
-parameters: {}

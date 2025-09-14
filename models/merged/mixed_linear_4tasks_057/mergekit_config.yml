@@ -1,25 +1,19 @@
-base_model: Qwen/Qwen2.5-7B-Instruct
 dtype: bfloat16
 merge_method: linear
 models:
 - model:
-    adapter: models/xsum/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/xsum/full
   parameters:
     weight: 0.25
 - model:
-    adapter: models/imdb_sentiment/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/imdb_sentiment/full
   parameters:
     weight: 0.25
 - model:
-    adapter: models/style_transfer/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/style_transfer/full
   parameters:
     weight: 0.25
 - model:
-    adapter: models/arxiv_summarization/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/arxiv_summarization/full
   parameters:
     weight: 0.25
-parameters: {}

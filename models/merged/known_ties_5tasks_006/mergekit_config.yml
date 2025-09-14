@@ -3,30 +3,30 @@ dtype: bfloat16
 merge_method: ties
 models:
 - model:
-    adapter: models/python_instructions_alpaca/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/python_instructions_alpaca/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/alpaca_instructions/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/alpaca_instructions/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/ms_marco_qa/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/ms_marco_qa/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/xsum/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/xsum/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/gsm8k_math/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/gsm8k_math/full
   parameters:
+    density: 0.5
     weight: 0.2
 parameters:
-  density: 0.5
   int8_mask: true
+  normalize: true

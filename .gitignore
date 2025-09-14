@@ -1,6 +1,11 @@
 models/merged/**/*.safetensors
 models/merged/**/*.json
 models/merged/**/*.md
+models/merged/**/merges.txt
+models/**/full/**/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

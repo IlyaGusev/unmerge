@@ -1,20 +1,15 @@
-base_model: Qwen/Qwen2.5-7B-Instruct
 dtype: bfloat16
 merge_method: linear
 models:
 - model:
-    adapter: models/xsum/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/xsum/full
   parameters:
     weight: 0.3333333333333333
 - model:
-    adapter: models/arjun_python_qa/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/arjun_python_qa/full
   parameters:
     weight: 0.3333333333333333
 - model:
-    adapter: models/orca_math/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/orca_math/full
   parameters:
     weight: 0.3333333333333333
-parameters: {}

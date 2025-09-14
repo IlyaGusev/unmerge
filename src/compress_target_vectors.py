@@ -3,59 +3,12 @@ import json
 
 import fire
 import torch
-from safetensors.torch import load_file
-from transformers import AutoModel, AutoConfig
 
-
-def load_base_model_weights():
-    print("Loading base model weights...")
-    config = AutoConfig.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
-
-    try:
-        model = AutoModel.from_pretrained("Qwen/Qwen2.5-7B-Instruct", torch_dtype=torch.bfloat16)
-        base_weights = {}
-        for name, param in model.named_parameters():
-            if any(n in name for n in ("q_proj", "v_proj", "k_proj", "o_proj")):
-                base_weights[name] = param.detach().clone()
-        del model
-        torch.cuda.empty_cache()
-        return base_weights
-    except Exception as e:
-        print(f"Error loading base model: {e}")
-        return None
-
-
-def extract_target_vector_from_merged(merged_model_path, base_weights):
-    print(f"Extracting target vector from {merged_model_path}")
-
-    merged_model = AutoModel.from_pretrained(merged_model_path, torch_dtype=torch.bfloat16)
-    target_vector = {}
-
-    for name, param in merged_model.named_parameters():
-        if name in base_weights:
-            delta = param.detach().clone() - base_weights[name]
-            if delta.sum() != 0:
-                print(merged_model_path, name, delta.sum())
-            target_vector[name] = delta
-        else:
-            print(f"Missing: {name}")
-
-    del merged_model
-    torch.cuda.empty_cache()
-    return target_vector
-
-
-def apply_binary_mask(weights, binary_mask):
-    compressed_weights = []
-    for name, mask in sorted(binary_mask.items()):
-        name = name.replace("model.", "")
-        name += ".weight"
-        if name in weights:
-            weight = weights[name]
-            compressed_weight = weight[mask]
-            compressed_weights.append(compressed_weight.flatten())
-    final_vector = torch.cat(compressed_weights, dim=0)
-    return final_vector
+from src.compress_task_vectors import (
+    load_base_model_weights,
+    extract_target_vector_from_merged,
+    apply_binary_mask,
+)
 
 
 def compress_target_vectors(mask_path: str = "models/unified_selection_mask.pt"):
@@ -106,7 +59,7 @@ def compress_target_vectors(mask_path: str = "models/unified_selection_mask.pt")
             "selected_params": len(compressed_vector),
             "group": result["group"],
             "method": result["method"],
-            "tasks": result["tasks"]
+            "tasks": result["tasks"],
         }
 
         success_count += 1
@@ -115,7 +68,7 @@ def compress_target_vectors(mask_path: str = "models/unified_selection_mask.pt")
     metadata = {
         "compressed_target_vectors": compressed_targets,
         "total_processed": success_count,
-        "binary_mask_path": mask_path
+        "binary_mask_path": mask_path,
     }
 
     with open("results/compress_target_vectors_metadata.json", "w") as f:

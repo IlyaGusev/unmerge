@@ -2,7 +2,7 @@
   "compressed_target_vectors": {
     "known_linear_3tasks_001": {
       "path": "models/merged/known_linear_3tasks_001/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "linear",
       "tasks": [
@@ -13,7 +13,7 @@
     },
     "known_ties_3tasks_002": {
       "path": "models/merged/known_ties_3tasks_002/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "ties",
       "tasks": [
@@ -24,7 +24,7 @@
     },
     "known_dare_linear_3tasks_003": {
       "path": "models/merged/known_dare_linear_3tasks_003/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "dare_linear",
       "tasks": [
@@ -35,7 +35,7 @@
     },
     "known_task_arithmetic_3tasks_004": {
       "path": "models/merged/known_task_arithmetic_3tasks_004/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "task_arithmetic",
       "tasks": [
@@ -46,7 +46,7 @@
     },
     "known_linear_5tasks_005": {
       "path": "models/merged/known_linear_5tasks_005/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "linear",
       "tasks": [
@@ -59,7 +59,7 @@
     },
     "known_ties_5tasks_006": {
       "path": "models/merged/known_ties_5tasks_006/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "ties",
       "tasks": [
@@ -72,7 +72,7 @@
     },
     "known_dare_linear_5tasks_007": {
       "path": "models/merged/known_dare_linear_5tasks_007/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "dare_linear",
       "tasks": [
@@ -85,7 +85,7 @@
     },
     "known_task_arithmetic_5tasks_008": {
       "path": "models/merged/known_task_arithmetic_5tasks_008/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "task_arithmetic",
       "tasks": [
@@ -98,7 +98,7 @@
     },
     "known_linear_4tasks_009": {
       "path": "models/merged/known_linear_4tasks_009/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "linear",
       "tasks": [
@@ -110,7 +110,7 @@
     },
     "known_ties_4tasks_010": {
       "path": "models/merged/known_ties_4tasks_010/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "ties",
       "tasks": [
@@ -122,7 +122,7 @@
     },
     "known_dare_linear_4tasks_011": {
       "path": "models/merged/known_dare_linear_4tasks_011/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "dare_linear",
       "tasks": [
@@ -134,7 +134,7 @@
     },
     "known_task_arithmetic_4tasks_012": {
       "path": "models/merged/known_task_arithmetic_4tasks_012/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "task_arithmetic",
       "tasks": [
@@ -146,7 +146,7 @@
     },
     "known_linear_4tasks_013": {
       "path": "models/merged/known_linear_4tasks_013/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "linear",
       "tasks": [
@@ -158,7 +158,7 @@
     },
     "known_ties_4tasks_014": {
       "path": "models/merged/known_ties_4tasks_014/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "ties",
       "tasks": [
@@ -170,7 +170,7 @@
     },
     "known_dare_linear_4tasks_015": {
       "path": "models/merged/known_dare_linear_4tasks_015/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "dare_linear",
       "tasks": [
@@ -182,7 +182,7 @@
     },
     "known_task_arithmetic_4tasks_016": {
       "path": "models/merged/known_task_arithmetic_4tasks_016/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "task_arithmetic",
       "tasks": [
@@ -194,7 +194,7 @@
     },
     "known_linear_5tasks_017": {
       "path": "models/merged/known_linear_5tasks_017/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "linear",
       "tasks": [
@@ -207,7 +207,7 @@
     },
     "known_ties_5tasks_018": {
       "path": "models/merged/known_ties_5tasks_018/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "ties",
       "tasks": [
@@ -220,7 +220,7 @@
     },
     "known_dare_linear_5tasks_019": {
       "path": "models/merged/known_dare_linear_5tasks_019/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "dare_linear",
       "tasks": [
@@ -233,7 +233,7 @@
     },
     "known_task_arithmetic_5tasks_020": {
       "path": "models/merged/known_task_arithmetic_5tasks_020/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "task_arithmetic",
       "tasks": [
@@ -246,7 +246,7 @@
     },
     "known_linear_5tasks_021": {
       "path": "models/merged/known_linear_5tasks_021/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "linear",
       "tasks": [
@@ -259,7 +259,7 @@
     },
     "known_ties_5tasks_022": {
       "path": "models/merged/known_ties_5tasks_022/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "ties",
       "tasks": [
@@ -272,7 +272,7 @@
     },
     "known_dare_linear_5tasks_023": {
       "path": "models/merged/known_dare_linear_5tasks_023/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "dare_linear",
       "tasks": [
@@ -285,7 +285,7 @@
     },
     "known_task_arithmetic_5tasks_024": {
       "path": "models/merged/known_task_arithmetic_5tasks_024/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "known",
       "method": "task_arithmetic",
       "tasks": [
@@ -298,7 +298,7 @@
     },
     "unknown_linear_4tasks_025": {
       "path": "models/merged/unknown_linear_4tasks_025/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "linear",
       "tasks": [
@@ -310,7 +310,7 @@
     },
     "unknown_ties_4tasks_026": {
       "path": "models/merged/unknown_ties_4tasks_026/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "ties",
       "tasks": [
@@ -322,7 +322,7 @@
     },
     "unknown_dare_linear_4tasks_027": {
       "path": "models/merged/unknown_dare_linear_4tasks_027/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "dare_linear",
       "tasks": [
@@ -334,7 +334,7 @@
     },
     "unknown_task_arithmetic_4tasks_028": {
       "path": "models/merged/unknown_task_arithmetic_4tasks_028/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "task_arithmetic",
       "tasks": [
@@ -346,7 +346,7 @@
     },
     "unknown_linear_3tasks_029": {
       "path": "models/merged/unknown_linear_3tasks_029/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "linear",
       "tasks": [
@@ -357,7 +357,7 @@
     },
     "unknown_ties_3tasks_030": {
       "path": "models/merged/unknown_ties_3tasks_030/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "ties",
       "tasks": [
@@ -368,7 +368,7 @@
     },
     "unknown_dare_linear_3tasks_031": {
       "path": "models/merged/unknown_dare_linear_3tasks_031/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "dare_linear",
       "tasks": [
@@ -379,7 +379,7 @@
     },
     "unknown_task_arithmetic_3tasks_032": {
       "path": "models/merged/unknown_task_arithmetic_3tasks_032/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "task_arithmetic",
       "tasks": [
@@ -390,7 +390,7 @@
     },
     "unknown_linear_5tasks_033": {
       "path": "models/merged/unknown_linear_5tasks_033/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "linear",
       "tasks": [
@@ -403,7 +403,7 @@
     },
     "unknown_ties_5tasks_034": {
       "path": "models/merged/unknown_ties_5tasks_034/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "ties",
       "tasks": [
@@ -416,7 +416,7 @@
     },
     "unknown_dare_linear_5tasks_035": {
       "path": "models/merged/unknown_dare_linear_5tasks_035/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "dare_linear",
       "tasks": [
@@ -429,7 +429,7 @@
     },
     "unknown_task_arithmetic_5tasks_036": {
       "path": "models/merged/unknown_task_arithmetic_5tasks_036/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "task_arithmetic",
       "tasks": [
@@ -442,7 +442,7 @@
     },
     "unknown_linear_4tasks_037": {
       "path": "models/merged/unknown_linear_4tasks_037/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "linear",
       "tasks": [
@@ -454,7 +454,7 @@
     },
     "unknown_ties_4tasks_038": {
       "path": "models/merged/unknown_ties_4tasks_038/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "ties",
       "tasks": [
@@ -466,7 +466,7 @@
     },
     "unknown_dare_linear_4tasks_039": {
       "path": "models/merged/unknown_dare_linear_4tasks_039/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "dare_linear",
       "tasks": [
@@ -478,7 +478,7 @@
     },
     "unknown_task_arithmetic_4tasks_040": {
       "path": "models/merged/unknown_task_arithmetic_4tasks_040/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "task_arithmetic",
       "tasks": [
@@ -490,7 +490,7 @@
     },
     "unknown_linear_2tasks_041": {
       "path": "models/merged/unknown_linear_2tasks_041/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "linear",
       "tasks": [
@@ -500,7 +500,7 @@
     },
     "unknown_ties_2tasks_042": {
       "path": "models/merged/unknown_ties_2tasks_042/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "ties",
       "tasks": [
@@ -510,7 +510,7 @@
     },
     "unknown_dare_linear_2tasks_043": {
       "path": "models/merged/unknown_dare_linear_2tasks_043/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "dare_linear",
       "tasks": [
@@ -520,7 +520,7 @@
     },
     "unknown_task_arithmetic_2tasks_044": {
       "path": "models/merged/unknown_task_arithmetic_2tasks_044/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "task_arithmetic",
       "tasks": [
@@ -530,7 +530,7 @@
     },
     "unknown_linear_4tasks_045": {
       "path": "models/merged/unknown_linear_4tasks_045/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "linear",
       "tasks": [
@@ -542,7 +542,7 @@
     },
     "unknown_ties_4tasks_046": {
       "path": "models/merged/unknown_ties_4tasks_046/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "ties",
       "tasks": [
@@ -554,7 +554,7 @@
     },
     "unknown_dare_linear_4tasks_047": {
       "path": "models/merged/unknown_dare_linear_4tasks_047/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "dare_linear",
       "tasks": [
@@ -566,7 +566,7 @@
     },
     "unknown_task_arithmetic_4tasks_048": {
       "path": "models/merged/unknown_task_arithmetic_4tasks_048/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "unknown",
       "method": "task_arithmetic",
       "tasks": [
@@ -578,7 +578,7 @@
     },
     "mixed_linear_5tasks_049": {
       "path": "models/merged/mixed_linear_5tasks_049/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "linear",
       "tasks": [
@@ -591,7 +591,7 @@
     },
     "mixed_ties_5tasks_050": {
       "path": "models/merged/mixed_ties_5tasks_050/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "ties",
       "tasks": [
@@ -604,7 +604,7 @@
     },
     "mixed_dare_linear_5tasks_051": {
       "path": "models/merged/mixed_dare_linear_5tasks_051/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "dare_linear",
       "tasks": [
@@ -617,7 +617,7 @@
     },
     "mixed_task_arithmetic_5tasks_052": {
       "path": "models/merged/mixed_task_arithmetic_5tasks_052/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "task_arithmetic",
       "tasks": [
@@ -630,7 +630,7 @@
     },
     "mixed_linear_5tasks_053": {
       "path": "models/merged/mixed_linear_5tasks_053/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "linear",
       "tasks": [
@@ -643,7 +643,7 @@
     },
     "mixed_ties_5tasks_054": {
       "path": "models/merged/mixed_ties_5tasks_054/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "ties",
       "tasks": [
@@ -656,7 +656,7 @@
     },
     "mixed_dare_linear_5tasks_055": {
       "path": "models/merged/mixed_dare_linear_5tasks_055/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "dare_linear",
       "tasks": [
@@ -669,7 +669,7 @@
     },
     "mixed_task_arithmetic_5tasks_056": {
       "path": "models/merged/mixed_task_arithmetic_5tasks_056/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "task_arithmetic",
       "tasks": [
@@ -682,7 +682,7 @@
     },
     "mixed_linear_4tasks_057": {
       "path": "models/merged/mixed_linear_4tasks_057/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "linear",
       "tasks": [
@@ -694,7 +694,7 @@
     },
     "mixed_ties_4tasks_058": {
       "path": "models/merged/mixed_ties_4tasks_058/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "ties",
       "tasks": [
@@ -706,7 +706,7 @@
     },
     "mixed_dare_linear_4tasks_059": {
       "path": "models/merged/mixed_dare_linear_4tasks_059/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "dare_linear",
       "tasks": [
@@ -718,7 +718,7 @@
     },
     "mixed_task_arithmetic_4tasks_060": {
       "path": "models/merged/mixed_task_arithmetic_4tasks_060/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "task_arithmetic",
       "tasks": [
@@ -730,7 +730,7 @@
     },
     "mixed_linear_5tasks_061": {
       "path": "models/merged/mixed_linear_5tasks_061/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "linear",
       "tasks": [
@@ -743,7 +743,7 @@
     },
     "mixed_ties_5tasks_062": {
       "path": "models/merged/mixed_ties_5tasks_062/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "ties",
       "tasks": [
@@ -756,7 +756,7 @@
     },
     "mixed_dare_linear_5tasks_063": {
       "path": "models/merged/mixed_dare_linear_5tasks_063/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "dare_linear",
       "tasks": [
@@ -769,7 +769,7 @@
     },
     "mixed_task_arithmetic_5tasks_064": {
       "path": "models/merged/mixed_task_arithmetic_5tasks_064/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "task_arithmetic",
       "tasks": [
@@ -782,7 +782,7 @@
     },
     "mixed_linear_3tasks_065": {
       "path": "models/merged/mixed_linear_3tasks_065/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "linear",
       "tasks": [
@@ -793,7 +793,7 @@
     },
     "mixed_ties_3tasks_066": {
       "path": "models/merged/mixed_ties_3tasks_066/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "ties",
       "tasks": [
@@ -804,7 +804,7 @@
     },
     "mixed_dare_linear_3tasks_067": {
       "path": "models/merged/mixed_dare_linear_3tasks_067/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "dare_linear",
       "tasks": [
@@ -815,7 +815,7 @@
     },
     "mixed_task_arithmetic_3tasks_068": {
       "path": "models/merged/mixed_task_arithmetic_3tasks_068/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "task_arithmetic",
       "tasks": [
@@ -826,7 +826,7 @@
     },
     "mixed_linear_5tasks_069": {
       "path": "models/merged/mixed_linear_5tasks_069/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "linear",
       "tasks": [
@@ -839,7 +839,7 @@
     },
     "mixed_ties_5tasks_070": {
       "path": "models/merged/mixed_ties_5tasks_070/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "ties",
       "tasks": [
@@ -852,7 +852,7 @@
     },
     "mixed_dare_linear_5tasks_071": {
       "path": "models/merged/mixed_dare_linear_5tasks_071/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "dare_linear",
       "tasks": [
@@ -865,7 +865,7 @@
     },
     "mixed_task_arithmetic_5tasks_072": {
       "path": "models/merged/mixed_task_arithmetic_5tasks_072/compressed_vector.pt",
-      "selected_params": 99904,
+      "selected_params": 999936,
       "group": "mixed",
       "method": "task_arithmetic",
       "tasks": [

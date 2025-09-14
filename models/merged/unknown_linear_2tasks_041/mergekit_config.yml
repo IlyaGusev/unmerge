@@ -1,15 +1,11 @@
-base_model: Qwen/Qwen2.5-7B-Instruct
 dtype: bfloat16
 merge_method: linear
 models:
 - model:
-    adapter: models/stablecode_python/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/stablecode_python/full
   parameters:
     weight: 0.5
 - model:
-    adapter: models/arxiv_summarization/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/arxiv_summarization/full
   parameters:
     weight: 0.5
-parameters: {}

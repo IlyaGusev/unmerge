@@ -3,15 +3,15 @@ dtype: bfloat16
 merge_method: ties
 models:
 - model:
-    adapter: models/stablecode_python/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/stablecode_python/full
   parameters:
+    density: 0.5
     weight: 0.5
 - model:
-    adapter: models/arxiv_summarization/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/arxiv_summarization/full
   parameters:
+    density: 0.5
     weight: 0.5
 parameters:
-  density: 0.5
   int8_mask: true
+  normalize: true

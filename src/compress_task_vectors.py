@@ -1,36 +1,43 @@
-import os
 import json
 from collections import defaultdict
+from typing import Dict, Any
 
 import fire
 import torch
-from safetensors.torch import load_file
-from transformers import AutoConfig
+from transformers import AutoModelForCausalLM
 
 
-def expand_lora_to_full_weights(lora_weights, base_model_config):
-    expanded_weights = {}
+def load_base_model_weights(model_name: str = "Qwen/Qwen2.5-7B-Instruct"):
+    print("Loading base model weights...")
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)
+    base_weights = {}
+    for name, param in model.named_parameters():
+        if any(n in name for n in ("q_proj", "v_proj", "k_proj", "o_proj")):
+            base_weights[name] = param.detach().clone()
+    del model
+    torch.cuda.empty_cache()
+    return base_weights
 
-    for name, weight in lora_weights.items():
-        if "lora_A" in name:
-            base_name = name.replace(".lora_A.weight", "")
-            lora_b_name = name.replace("lora_A", "lora_B")
 
-            if lora_b_name in lora_weights:
-                lora_a = weight
-                lora_b = lora_weights[lora_b_name]
-
-                delta_w = lora_b @ lora_a
-
-                clean_name = base_name.replace("base_model.model.", "")
-                expanded_weights[clean_name] = delta_w
-
-    return expanded_weights
+def extract_target_vector_from_merged(
+    merged_model_path: str, base_weights: Dict[str, Any]
+):
+    print(f"Extracting target vector from {merged_model_path}")
+    merged_model = AutoModelForCausalLM.from_pretrained(
+        merged_model_path, torch_dtype=torch.bfloat16
+    )
+    target_vector = {}
+    for name, param in merged_model.named_parameters():
+        if name in base_weights:
+            delta = param.detach().clone() - base_weights[name]
+            target_vector[name] = delta
+    del merged_model
+    torch.cuda.empty_cache()
+    return target_vector
 
 
 def aggregate_weight_magnitudes(expanded_weights_list):
     aggregated = {}
-
     for expanded_weights in expanded_weights_list:
         for name, weight in expanded_weights.items():
             weight_mag = torch.abs(weight)
@@ -38,15 +45,15 @@ def aggregate_weight_magnitudes(expanded_weights_list):
                 aggregated[name] = weight_mag
             else:
                 aggregated[name] = torch.maximum(aggregated[name], weight_mag)
-
     return aggregated
 
 
 def create_binary_mask(aggregated_weights, target_params=100000):
     module_weights = defaultdict(list)
+    lora_modules = ("q_proj", "k_proj", "v_proj", "o_proj")
 
     for name, weight in aggregated_weights.items():
-        if any(proj in name for proj in ["q_proj", "k_proj", "v_proj", "o_proj"]):
+        if any(proj in name for proj in lora_modules):
             layer_match = name.split(".")
             layer_num = None
             for i, part in enumerate(layer_match):
@@ -56,7 +63,7 @@ def create_binary_mask(aggregated_weights, target_params=100000):
 
             if layer_num is not None:
                 proj_type = None
-                for proj in ["q_proj", "k_proj", "v_proj", "o_proj"]:
+                for proj in lora_modules:
                     if proj in name:
                         proj_type = proj
                         break
@@ -64,10 +71,7 @@ def create_binary_mask(aggregated_weights, target_params=100000):
                 if proj_type:
                     module_key = f"layer_{layer_num}_{proj_type}"
                     flat_weight = weight.flatten()
-                    indices = torch.arange(len(flat_weight))
-                    module_weights[module_key].append(
-                        (name, flat_weight, indices, weight.shape)
-                    )
+                    module_weights[module_key].append((name, flat_weight, weight.shape))
 
     total_modules = len(module_weights)
     assert total_modules != 0, "No valid modules found"
@@ -80,37 +84,36 @@ def create_binary_mask(aggregated_weights, target_params=100000):
     binary_mask = {}
     total_selected = 0
 
-    for module_key, weight_list in module_weights.items():
+    for _, weight_list in module_weights.items():
         if not weight_list:
             continue
 
+        module_mask = {}
         combined_weights = []
         combined_info = []
 
-        for name, flat_weight, indices, orig_shape in weight_list:
+        for name, flat_weight, orig_shape in weight_list:
+            module_mask[name] = torch.zeros(orig_shape, dtype=torch.bool)
             combined_weights.append(flat_weight)
             combined_info.extend(
                 [(name, i, orig_shape) for i in range(len(flat_weight))]
             )
 
-        if combined_weights:
-            all_weights = torch.cat(combined_weights)
-            _, top_indices = torch.topk(
-                all_weights, min(k_per_module, len(all_weights))
-            )
+        assert combined_weights
+        assert combined_info
 
-            module_mask = {}
-            for idx in top_indices:
-                name, orig_idx, orig_shape = combined_info[idx]
-                if name not in module_mask:
-                    module_mask[name] = torch.zeros(orig_shape, dtype=torch.bool)
+        all_weights = torch.cat(combined_weights)
+        _, top_indices = torch.topk(all_weights, min(k_per_module, len(all_weights)))
 
-                flat_mask = module_mask[name].flatten()
-                flat_mask[orig_idx] = True
-                module_mask[name] = flat_mask.reshape(orig_shape)
+        for idx in top_indices:
+            name, orig_idx, orig_shape = combined_info[idx]
+            assert orig_idx <= idx.item()
+            existing_mask = module_mask[name].flatten()
+            existing_mask[orig_idx] = True
+            module_mask[name] = existing_mask.reshape(orig_shape)
 
-            binary_mask.update(module_mask)
-            total_selected += len(top_indices)
+        binary_mask.update(module_mask)
+        total_selected += len(top_indices)
 
     print(f"Created binary mask with {total_selected} selected parameters")
     return binary_mask
@@ -138,26 +141,21 @@ def compress_task_vectors(
     with open(training_results_path) as r:
         all_tasks = [task["task_name"] for task in json.load(r)]
 
-    print(f"Loading {len(all_tasks)} task adapters, {len(dictionary_tasks)} in dictionary...")
-
-    base_config = AutoConfig.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+    print(
+        f"Loading {len(all_tasks)} task adapters, {len(dictionary_tasks)} in dictionary..."
+    )
 
     expanded_weights_list = []
     task_vectors = {}
 
+    base_weights = load_base_model_weights()
     for task in all_tasks:
-        adapter_path = f"models/{task}/adapter/adapter_model.safetensors"
         print(f"Processing {task}...")
-
-        assert os.path.exists(adapter_path)
-        lora_weights = load_file(adapter_path)
-        expanded = expand_lora_to_full_weights(lora_weights, base_config)
-        task_vectors[task] = expanded
-
+        vector = extract_target_vector_from_merged(f"models/{task}/full", base_weights)
+        task_vectors[task] = vector
         if task in dictionary_tasks:
-            expanded_weights_list.append(expanded)
-
-        total_params = sum(w.numel() for w in expanded.values())
+            expanded_weights_list.append(vector)
+        total_params = sum(w.numel() for w in vector.values())
         print(f"  Expanded {task}: {total_params} parameters")
 
     print(f"Loaded {len(expanded_weights_list)} dictionary task vectors")

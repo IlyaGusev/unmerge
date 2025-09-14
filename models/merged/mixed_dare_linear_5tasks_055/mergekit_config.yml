@@ -3,29 +3,27 @@ dtype: bfloat16
 merge_method: dare_linear
 models:
 - model:
-    adapter: models/alpaca_instructions/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/alpaca_instructions/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/ms_marco_qa/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/ms_marco_qa/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/imdb_sentiment/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/imdb_sentiment/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/style_transfer/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/style_transfer/full
   parameters:
+    density: 0.5
     weight: 0.2
 - model:
-    adapter: models/arxiv_summarization/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/arxiv_summarization/full
   parameters:
+    density: 0.5
     weight: 0.2
-parameters:
-  density: 0.5

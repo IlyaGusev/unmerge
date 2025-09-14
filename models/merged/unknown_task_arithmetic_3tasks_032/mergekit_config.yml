@@ -3,18 +3,14 @@ dtype: bfloat16
 merge_method: task_arithmetic
 models:
 - model:
-    adapter: models/style_transfer/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/style_transfer/full
   parameters:
     weight: 0.3333333333333333
 - model:
-    adapter: models/orca_math/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/orca_math/full
   parameters:
     weight: 0.3333333333333333
 - model:
-    adapter: models/stablecode_python/adapter
-    model: Qwen/Qwen2.5-7B-Instruct
+    model: models/stablecode_python/full
   parameters:
     weight: 0.3333333333333333
-parameters: {}

@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Phase 3 successfully implemented binary mask-based dimensionality reduction for task vectors, compressing them from ~822M parameters to exactly 99,904 parameters (~100k target) - achieving a compression ratio of **8,228x** while preserving essential weight information through magnitude-based selection.
+Phase 3 successfully implemented binary mask-based dimensionality reduction for task vectors, compressing them from ~822M parameters to exactly 999936 parameters (~1M target) - achieving a compression ratio of **8,228x** while preserving essential weight information through magnitude-based selection.
 
 ## Methodology
 
@@ -12,8 +12,8 @@ Following the UNMERGE proposal specification, Phase 3 implemented the exact algo
 
 1. **LoRA Expansion to Full Weights**: Converted LoRA adapters (rank-32) to full weight space using ΔW = LoRA_B @ LoRA_A
 2. **Magnitude Aggregation**: Applied max operation across all 8 task adapters
-3. **Top-k Selection Per Module**: Selected top-892 weights per attention module (q_proj, k_proj, v_proj, o_proj) across 28 layers
-4. **Binary Mask Creation**: Generated unified selection mask with exactly 99,904 parameters
+3. **Top-k Selection Per Module**: Selected top-8928 weights per attention module (q_proj, k_proj, v_proj, o_proj) across 28 layers
+4. **Binary Mask Creation**: Generated unified selection mask with exactly 999936 parameters
 5. **Vector Compression**: Applied mask to all task vectors and target vectors
 
 ### Required Tasks Processing
@@ -35,16 +35,15 @@ All 8 mandated tasks were successfully processed as a dictionary for a selection
 | Metric | Value |
 |--------|-------|
 | Original Parameters | 822,083,584 per task vector |
-| Compressed Parameters | 99,904 per task vector |
+| Compressed Parameters | 999,936 per task vector |
 | Compression Ratio | 8,228.74x |
-| Target Achievement | 99.904% of 100k target |
-| Memory Reduction | 99.988% |
+| Target Achievement | 99.9% of 1M target |
 
 ### Binary Mask Analysis
 
 Structure Distribution:
 - Total Modules: 112 (28 layers × 4 projections)
-- Parameters per Module: ~892 (evenly distributed)
+- Parameters per Module: ~8928 (evenly distributed)
 - Layer Coverage: All 28 transformer layers included
 - Projection Balance: Perfect 25% distribution across q/k/v/o projections
 
@@ -77,16 +76,16 @@ All 8 required task vectors successfully compressed:
 
 | Task | Original Params | Compressed Params | Compression Ratio |
 |------|----------------|-------------------|-------------------|
-| latin_translation | 822,083,584 | 99,904 | 8,228.74x |
-| codesearchnet_python | 822,083,584 | 99,904 | 8,228.74x |
-| python_instructions_alpaca | 822,083,584 | 99,904 | 8,228.74x |
-| alpaca_instructions | 822,083,584 | 99,904 | 8,228.74x |
-| ms_marco_qa | 822,083,584 | 99,904 | 8,228.74x |
-| xsum | 822,083,584 | 99,904 | 8,228.74x |
-| reason_math | 822,083,584 | 99,904 | 8,228.74x |
-| gsm8k_math | 822,083,584 | 99,904 | 8,228.74x |
+| latin_translation | 822,083,584 | 999,936 | 8,228.74x |
+| codesearchnet_python | 822,083,584 | 999,936 | 8,228.74x |
+| python_instructions_alpaca | 822,083,584 | 999,936 | 8,228.74x |
+| alpaca_instructions | 822,083,584 | 999,936 | 8,228.74x |
+| ms_marco_qa | 822,083,584 | 999,936 | 8,228.74x |
+| xsum | 822,083,584 | 999,936 | 8,228.74x |
+| reason_math | 822,083,584 | 999,936 | 8,228.74x |
+| gsm8k_math | 822,083,584 | 999,936 | 8,228.74x |
 
-Perfect Consistency: All task vectors achieve identical compression to exactly 99,904 parameters, demonstrating robust mask application.
+Perfect Consistency: All task vectors achieve identical compression to exactly 999,936 parameters, demonstrating robust mask application.
 
 ### Binary Mask Effectiveness
 
@@ -163,11 +162,11 @@ Selected Components Characteristics:
 Phase 3 successfully delivers the requirements for Phase 4 decomposition:
 
 Deliverables for Phase 4:
-1. Compressed Task Vectors: 15 vectors @ 99,904 parameters each, with 8 vectors for the dictionary
+1. Compressed Task Vectors: 15 vectors @ 999,936 parameters each, with 8 vectors for the dictionary
 2. Unified Binary Mask: Single mask for all vector compression  
 3. Target Vector Framework: Ready for merged model compression
 4. Validation System: Comprehensive metrics and analysis tools
-5. 100k Parameter Target: Exact achievement (99,904/100,000 = 99.9%)
+5. 1M Parameter Target: Exact achievement (999,936/1,000,000 = 99.9%)
 
 Decomposition Readiness:
 - Tractable vector sizes for LASSO/OMP/other sparse methods
@@ -189,7 +188,7 @@ Universal Importance Patterns:
 
 ### Task Vector Similarity
 
-All 8 task vectors compress to identical parameter counts (99,904), suggesting:
+All 8 task vectors compress to identical parameter counts (999,936), suggesting:
 - Shared Architecture Importance: Common structural elements across tasks  
 - Consistent LoRA Training: Similar adaptation patterns
 - Effective Aggregation: Max operation captures universal patterns
@@ -199,21 +198,21 @@ All 8 task vectors compress to identical parameter counts (99,904), suggesting:
 Validation of Design Choices:
 1. Max Aggregation: Successfully identifies cross-task important weights
 2. Module-Level Selection: Achieves balanced representation
-3. Top-k Strategy: Precise parameter count control (99,904/100,000)
+3. Top-k Strategy: Precise parameter count control (999,936/1,000,000)
 4. Vectorized Implementation: Efficient processing of ~822M parameters
 
 ## Conclusion
 
 Phase 3 successfully achieved all objectives:
 
-- Dimensionality Reduction: 822M to 100k parameters (8,228x compression)  
+- Dimensionality Reduction: 822M to 1M parameters (822x compression)
 - Binary Mask Creation: Unified mask for all vector compression
 - Required Tasks: All 8 mandated tasks processed correctly
 - Algorithm Implementation: Exact proposal specification followed
 - Validation Framework: Comprehensive testing and analysis
 - Phase 4 Preparation: Tractable vectors ready for decomposition
 
-The implementation demonstrates that task vectors can be dramatically compressed while preserving essential information through magnitude-based selection. The resulting 100k parameter vectors maintain the highest-impact weights across all attention mechanisms, providing an optimal foundation for the sparse decomposition experiments in Phase 4.
+The implementation demonstrates that task vectors can be dramatically compressed while preserving essential information through magnitude-based selection. The resulting 1M parameter vectors maintain the highest-impact weights across all attention mechanisms, providing an optimal foundation for the sparse decomposition experiments in Phase 4.
 
 Key Innovation: Single unified binary mask enables consistent compression across all task and target vectors, ensuring comparable representations for decomposition analysis.
 
