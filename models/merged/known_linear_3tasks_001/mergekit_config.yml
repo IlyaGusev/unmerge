@@ -1,0 +1,20 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+dtype: bfloat16
+merge_method: linear
+models:
+- model:
+    adapter: models/latin_translation/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.3333333333333333
+- model:
+    adapter: models/python_instructions_alpaca/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.3333333333333333
+- model:
+    adapter: models/reason_math/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.3333333333333333
+parameters: {}

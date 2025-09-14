@@ -130,41 +130,39 @@ def apply_binary_mask(weights, binary_mask):
 def compress_task_vectors(
     target_params: int = 100000,
     binary_mask_path: str = "models/unified_selection_mask.pt",
+    dictionary_tasks_path: str = "results/dictionary_tasks.json",
+    training_results_path: str = "results/training_results.json",
 ):
-    required_tasks = [
-        "latin_translation",
-        "codesearchnet_python",
-        "python_instructions_alpaca",
-        "alpaca_instructions",
-        "ms_marco_qa",
-        "xsum",
-        "reason_math",
-        "gsm8k_math",
-    ]
+    with open(dictionary_tasks_path) as r:
+        dictionary_tasks = json.load(r)["dictionary_tasks"]
+    with open(training_results_path) as r:
+        all_tasks = [task["task_name"] for task in json.load(r)]
 
-    print(f"Loading {len(required_tasks)} required task adapters...")
+    print(f"Loading {len(all_tasks)} task adapters, {len(dictionary_tasks)} in dictionary...")
 
     base_config = AutoConfig.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
 
     expanded_weights_list = []
     task_vectors = {}
 
-    for task in required_tasks:
+    for task in all_tasks:
         adapter_path = f"models/{task}/adapter/adapter_model.safetensors"
         print(f"Processing {task}...")
 
         assert os.path.exists(adapter_path)
         lora_weights = load_file(adapter_path)
         expanded = expand_lora_to_full_weights(lora_weights, base_config)
-        expanded_weights_list.append(expanded)
         task_vectors[task] = expanded
+
+        if task in dictionary_tasks:
+            expanded_weights_list.append(expanded)
 
         total_params = sum(w.numel() for w in expanded.values())
         print(f"  Expanded {task}: {total_params} parameters")
 
-    print(f"Loaded {len(expanded_weights_list)} task vectors")
+    print(f"Loaded {len(expanded_weights_list)} dictionary task vectors")
 
-    print("Aggregating weight magnitudes across all adapters...")
+    print("Aggregating weight magnitudes across dictionary adapters...")
     aggregated = aggregate_weight_magnitudes(expanded_weights_list)
 
     print("Creating binary selection mask...")
@@ -184,7 +182,7 @@ def compress_task_vectors(
         torch.save(compressed, f"models/{task}/compressed_task_vector.pt")
 
     metadata = {
-        "required_tasks": required_tasks,
+        "dictionary_tasks": dictionary_tasks,
         "tasks_processed": list(task_vectors.keys()),
         "target_compressed_params": target_params,
         "binary_mask_path": binary_mask_path,

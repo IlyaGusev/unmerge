@@ -1,0 +1,22 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+dtype: bfloat16
+merge_method: ties
+models:
+- model:
+    adapter: models/xsum/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.3333333333333333
+- model:
+    adapter: models/arjun_python_qa/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.3333333333333333
+- model:
+    adapter: models/orca_math/adapter
+    model: Qwen/Qwen2.5-7B-Instruct
+  parameters:
+    weight: 0.3333333333333333
+parameters:
+  density: 0.5
+  int8_mask: true
