@@ -1,14 +1,16 @@
-esearch Proposal: Causal Unmerging via Sparse Coding (UNMERGE)
+Research Proposal: Unmerging via Sparse Coding (UNMERGE)
 
 ## 1. Novelty Statement
 
-The core novelty of this work lies in establishing a **causally verifiable framework for model capability attribution**. While prior work has explored the parameter space of neural networks to identify features or abilities (e.g., "Dissecting Model Abilities with Parameter-Space Probes", 2305.14241), these methods primarily offer correlational insights. They can identify *where* a skill resides but do not provide a mechanism to prove this attribution through direct, surgical intervention.
+The core novelty of this work lies in establishing a **verifiable framework for model capability attribution** that allows backtracking of merged models. 
 
-Our proposed method, UNMERGE, reframes the problem. We treat a model's fine-tuned capabilities, encapsulated in a task vector, as a "bill of materials" that can be decomposed into a sparse, non-negative combination of known "micro-task" vectors from a pre-built dictionary. The crucial innovation is the **subtractive, causal verification loop**: by identifying a micro-task's contribution (e.g., 'pandas programming'), we can subtract its corresponding vector from the model's weights and verify a precise, predictable performance drop on that specific skill, while demonstrating minimal impact on unrelated abilities. This moves beyond mere observation to a formal, editable, and verifiable understanding of a model's composition, which has profound implications for model safety, customisation, and interpretability. We are not merely dissecting; we are enabling a form of "model neurosurgery".
+Our proposed method, UNMERGE, reframes the problem. We treat a model's fine-tuned capabilities, encapsulated in a task vector, as a "bill of materials" that can be decomposed into a sparse, non-negative combination of known "micro-task" vectors from a pre-built dictionary.
+
+It enables a controlled setting that can be a base for furure experiments. For instance, with causal verification.
 
 ## 2. Detailed Plan of Experiments
 
-This plan is designed to be executable on a **single consumer-grade GPU (e.g., NVIDIA RTX 3090 with 24GB VRAM)** and within a **$100 OpenRouter credit budget**.
+This plan is designed to be executable on a **single consumer-grade GPU (e.g., NVIDIA RTX 3090 with 24GB VRAM)**.
 
 ### Phase 1: Micro-Task Dictionary Construction
 
@@ -85,15 +87,3 @@ Algorithm: For each of the 30-40 target models:
 Use the same fixed task vector dictionary and three groups of target models.
 
 Result: This process yields comprehensive comparsions between different decompsotion methods in different conditions.
-
-### Phase 5: Causal Verification
-
-Objective: Surgically remove a decomposed capability and measure the impact, validating the causal link.
-Protocol:
-1. This part should be done for models composed only from the tasks not from the dictionary ("unknown tasks").
-2. For a target model and a decomposed skill with a high coefficient (e.g., 'pandas programming'), retrieve the corresponding micro-task vector from the dictionary.
-3. Surgical Subtraction: Subtract the weighted micro-task vector (`c_i * ΔW_dict_i`) from the target model's weights.
-4. This creates a new, "ablated" model.
-5. Evaluate capability drop for the ablated model on a held-out test set specific to the removed skill. Use tests sets of the datasets from Phase 1. Use chat template (the same way it was used in training).
-5. Evaluate the ablated model on unrelated benchmarks (also test sets from Phase 1, but not related to the removed skill). We expect to see minimal to no performance degradation, demonstrating the "surgical" nature of the intervention and the absence of catastrophic forgetting.
-
