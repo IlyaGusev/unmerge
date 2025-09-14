@@ -71,7 +71,6 @@ Algorithm: For each of the 30-40 target models:
 - Orthogonal Matching Pursuit
 - NNLS
 - Anything you can think of and anything extracted from the literature
-Scale coefficients in a way where their sum is 1.
 4. Calculate the following metrics for the first and the second model groups (known and mixed vectors):
 - Component precision
 - Component recall
