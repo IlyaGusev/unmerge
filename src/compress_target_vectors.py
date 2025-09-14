@@ -15,7 +15,7 @@ def load_base_model_weights():
         model = AutoModel.from_pretrained("Qwen/Qwen2.5-7B-Instruct", torch_dtype=torch.bfloat16)
         base_weights = {}
         for name, param in model.named_parameters():
-            if any(proj in name for proj in ['q_proj', 'k_proj', 'v_proj', 'o_proj']):
+            if any(n in name for n in ("q_proj", "v_proj", "k_proj", "o_proj")):
                 base_weights[name] = param.detach().clone()
         del model
         torch.cuda.empty_cache()
@@ -34,7 +34,11 @@ def extract_target_vector_from_merged(merged_model_path, base_weights):
     for name, param in merged_model.named_parameters():
         if name in base_weights:
             delta = param.detach().clone() - base_weights[name]
+            if delta.sum() != 0:
+                print(merged_model_path, name, delta.sum())
             target_vector[name] = delta
+        else:
+            print(f"Missing: {name}")
 
     del merged_model
     torch.cuda.empty_cache()
@@ -43,14 +47,11 @@ def extract_target_vector_from_merged(merged_model_path, base_weights):
 
 def apply_binary_mask(weights, binary_mask):
     compressed_weights = []
-    for name, weight in sorted(weights.items()):
-        name = "model." + name
-        if "bias" in name:
-            continue
-        if name.endswith(".weight"):
-            name = name.replace(".weight", "")
-        if name in binary_mask:
-            mask = binary_mask[name]
+    for name, mask in sorted(binary_mask.items()):
+        name = name.replace("model.", "")
+        name += ".weight"
+        if name in weights:
+            weight = weights[name]
             compressed_weight = weight[mask]
             compressed_weights.append(compressed_weight.flatten())
     final_vector = torch.cat(compressed_weights, dim=0)

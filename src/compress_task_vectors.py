@@ -118,9 +118,9 @@ def create_binary_mask(aggregated_weights, target_params=100000):
 
 def apply_binary_mask(weights, binary_mask):
     compressed_weights = []
-    for name, weight in sorted(weights.items()):
-        if name in binary_mask:
-            mask = binary_mask[name]
+    for name, mask in sorted(binary_mask.items()):
+        if name in weights:
+            weight = weights[name]
             compressed_weight = weight[mask]
             compressed_weights.append(compressed_weight.flatten())
     final_vector = torch.cat(compressed_weights, dim=0)
@@ -128,7 +128,7 @@ def apply_binary_mask(weights, binary_mask):
 
 
 def compress_task_vectors(
-    target_params: int = 100000,
+    target_params: int = 1000000,
     binary_mask_path: str = "models/unified_selection_mask.pt",
     dictionary_tasks_path: str = "results/dictionary_tasks.json",
     training_results_path: str = "results/training_results.json",

@@ -6,6 +6,10 @@ from typing import List, Dict, Any
 import yaml
 
 import fire
+import torch
+from transformers import AutoTokenizer
+from transformers import AutoModelForCausalLM
+from peft import PeftConfig, PeftModel
 
 BASE_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
@@ -52,11 +56,10 @@ def create_merge_config(
         weights = [1.0 / len(adapters)] * len(adapters)
 
     models = []
-    for i, adapter in enumerate(adapters):
-        adapter_path = f"models/{adapter}/adapter"
+    for i, task in enumerate(adapters):
         models.append(
             {
-                "model": {"model": BASE_MODEL, "adapter": adapter_path},
+                "model": {"model": f"models/{task}/full"},
                 "parameters": {"weight": weights[i]},
             }
         )
@@ -69,11 +72,16 @@ def create_merge_config(
         "dtype": "bfloat16",
     }
 
+    if method in ("ties", "dare_linear"):
+        for model in models:
+            model["parameters"]["density"] = 0.5
     if method == "ties":
-        config["parameters"] = {"density": 0.5, "int8_mask": True}
-    elif method == "dare_linear":
-        config["parameters"] = {"density": 0.5}
-
+        config["parameters"]["int8_mask"] = True
+        config["parameters"]["normalize"] = True
+    if not config["parameters"]:
+        config.pop("parameters", None)
+    if method == "linear":
+        config.pop("base_model", None)
     return config
 
 
@@ -81,6 +89,31 @@ def generate_all_merge_configs(num_per_group: int = 6):
     configs = []
 
     random.seed(42)
+
+    print("Merging adapters...")
+    for task in ALL_TASKS:
+        if os.path.exists(f"models/{task}/full"):
+            print(f"Assuming {task} is already merged")
+            continue
+        adapter_path = f"models/{task}/adapter"
+        config = PeftConfig.from_pretrained(adapter_path)
+        base_model_path = config.base_model_name_or_path
+        tokenizer = AutoTokenizer.from_pretrained(base_model_path)
+        tokenizer.save_pretrained(f"models/{task}/full")
+        device_map = "auto"
+        base_model = AutoModelForCausalLM.from_pretrained(
+            base_model_path,
+            torch_dtype=torch.bfloat16,
+            device_map=device_map,
+        )
+        lora_model = PeftModel.from_pretrained(
+            base_model, adapter_path, torch_dtype=torch.bfloat16, device_map=device_map
+        )
+        lora_model = lora_model.merge_and_unload()
+        lora_model.train(False)
+        lora_model.save_pretrained(f"models/{task}/full")
+        del base_model, lora_model
+        print(f"Merged {task}")
 
     known_combinations = generate_task_combinations(KNOWN_TASKS)
     unknown_combinations = generate_task_combinations(UNKNOWN_TASKS)
